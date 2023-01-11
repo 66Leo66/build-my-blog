@@ -17,15 +17,19 @@ runs:
           ${{ runner.OS }}-npm-cache
           
     - name: Fix File Modify Time
+      shell: bash
       run: git ls-files -z | while read -d '' path; do touch -d "$(git log -1 --format="@%ct" "$path")" "$path"; done
       
     - name: Install Node Dependencies
+      shell: bash
       run: npm install
       
     - name: Install Pandoc
+      shell: bash
       run: |
         wget https://github.com/jgm/pandoc/releases/download/2.19.2/pandoc-2.19.2-1-amd64.deb -O pandoc.deb
         sudo dpkg -i pandoc.deb
         
     - name: Build
+      shell: bash
       run: npm run build
